@@ -1,0 +1,11 @@
+import api from './axios'
+export const getAllDoctors      = ()    => api.get('/doctors')
+export const getDoctorById      = id   => api.get(`/doctors/${id}`)
+export const getSpecializations = ()   => api.get('/doctors/specializations')
+export const filterDoctors      = p    => api.get('/doctors/filter', { params: p })
+export const getAvailableSlots  = id   => api.get(`/appointments/slots/doctor/${id}`)
+export const getMyProfile       = ()   => api.get('/doctors/profile')
+export const updateMyProfile    = d    => api.put('/doctors/profile', d)
+export const addSlot            = d    => api.post('/appointments/slots', d)
+export const getMySlots         = ()   => api.get('/appointments/slots/my')
+export const deleteSlot         = id   => api.delete(`/appointments/slots/${id}`)
