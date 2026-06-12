@@ -15,6 +15,7 @@ import ManageSlots        from './pages/doctor/ManageSlots'
 import DoctorAppointments from './pages/doctor/DoctorAppointments'
 import WritePrescription  from './pages/doctor/WritePrescription'
 import SymptomChecker from './pages/patient/SymptomChecker'
+import NearbyHospitals from './pages/patient/NearbyHospitals'
 
 const App = () => {
   const { user } = useAuth()
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/doctor/appointments" element={<ProtectedRoute role="DOCTOR"><DoctorAppointments/></ProtectedRoute>} />
         <Route path="/doctor/prescription" element={<ProtectedRoute role="DOCTOR"><WritePrescription/></ProtectedRoute>} />
         <Route path="/patient/symptoms" element={<ProtectedRoute role="PATIENT"><SymptomChecker/></ProtectedRoute>} />
+        <Route path="/patient/hospitals" element={<ProtectedRoute role="PATIENT"><NearbyHospitals/></ProtectedRoute>} />
         <Route path="*" element={
           user?.role==='DOCTOR'  ? <Navigate to="/doctor/dashboard"/> :
           user?.role==='PATIENT' ? <Navigate to="/patient/dashboard"/> :

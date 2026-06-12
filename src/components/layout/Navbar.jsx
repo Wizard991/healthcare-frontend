@@ -31,6 +31,7 @@ const Navbar = () => {
         { to:'/patient/records', label:'Health Records' },
         { to:'/patient/prescriptions', label:'Prescriptions' },
         { to:'/patient/symptoms', label:'AI Symptom Checker' },
+        { to:'/patient/hospitals', label:'Nearby Hospitals' },
       ]
 
   return (
