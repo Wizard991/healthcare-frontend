@@ -7,6 +7,18 @@ import { FaSearch, FaUserMd, FaStar, FaFilter } from 'react-icons/fa'
 import { MdLocationOn } from 'react-icons/md'
 import toast from 'react-hot-toast'
 
+// Search history helpers
+const HISTORY_KEY = 'doctor_search_history'
+const getHistory = () => JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]')
+const addToHistory = (term) => {
+  if (!term.trim()) return
+  const h = getHistory().filter(x => x !== term).slice(0, 4)
+  localStorage.setItem(HISTORY_KEY, JSON.stringify([term, ...h]))
+}
+const clearHistory = () => localStorage.removeItem(HISTORY_KEY)
+const [history, setHistory] = useState(getHistory())
+const [showHistory, setShowHistory] = useState(false)
+
 const FindDoctors = () => {
   const navigate = useNavigate()
   const [params] = useSearchParams()
@@ -38,10 +50,13 @@ const FindDoctors = () => {
   }
 
   const handleSearch = e => {
-    e.preventDefault()
-    setSelectedSpec(search)
-    fetch(search)
-  }
+  e.preventDefault()
+  addToHistory(search)
+  setHistory(getHistory())
+  setSelectedSpec(search)
+  fetch(search)
+  setShowHistory(false)
+}
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>

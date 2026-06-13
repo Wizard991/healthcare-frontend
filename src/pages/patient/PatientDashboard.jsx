@@ -8,6 +8,7 @@ import { getMyPrescriptions } from '../../api/prescriptionApi'
 import { useAuth } from '../../context/AuthContext'
 import { FaCalendarAlt, FaFileMedical, FaUserMd, FaClipboard, FaArrowRight, FaStethoscope } from 'react-icons/fa'
 import toast from 'react-hot-toast'
+import AppointmentReminder from '../../components/ui/AppointmentReminder'
 
 const StatCard = ({ icon, value, label, color, delay }) => {
   const ref = React.useRef(null)
@@ -55,6 +56,7 @@ const PatientDashboard = () => {
 
         {/* Welcome */}
         <div style={{ marginBottom:28 }} className="fade-in">
+          <AppointmentReminder appointments={appointments} />
           <h1 style={{ fontSize:24, fontWeight:800, color:'var(--text-dark)' }}>Good morning, {summary.patientName || 'there'} 👋</h1>
           <p style={{ color:'var(--text-light)', marginTop:4 }}>Here's your health overview for today</p>
         </div>
