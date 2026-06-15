@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Navbar from '../../components/layout/Navbar'
 import { getMyAppointmentsPatient, cancelAppointment } from '../../api/appointmentApi'
-import { FaCalendarAlt, FaUserMd } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 
 const MyAppointments = () => {
@@ -28,14 +27,13 @@ const MyAppointments = () => {
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth:1100, margin:'0 auto', padding:'28px 20px' }}>
+      <div style={{ maxWidth:1100, margin:'0 auto', padding:'32px 24px' }}>
         <div style={{ marginBottom:24 }}>
-          <h1 style={{ fontSize:24, fontWeight:800 }}>My Appointments</h1>
-          <p style={{ color:'var(--text-light)', marginTop:4 }}>Track and manage all your appointments</p>
+          <h1 className="section-title" style={{ fontSize:28 }}>My Appointments</h1>
+          <p className="section-sub">Track and manage all your appointments</p>
         </div>
 
-        {/* Filter tabs */}
-        <div style={{ display:'flex', gap:6, marginBottom:20, flexWrap:'wrap' }}>
+        <div style={{ display:'flex', gap:8, marginBottom:20, flexWrap:'wrap' }}>
           {['ALL','PENDING','CONFIRMED','COMPLETED','CANCELLED'].map(s => (
             <button key={s} onClick={() => setFilter(s)} className="btn btn-sm" style={{
               background: filter===s ? 'var(--primary)' : 'white',
@@ -47,11 +45,11 @@ const MyAppointments = () => {
         </div>
 
         <div className="card">
-          {loading ? <div style={{ textAlign:'center', padding:60 }}><div style={{ width:36, height:36, border:'3px solid #e0e0e0', borderTop:'3px solid var(--primary)', borderRadius:'50%', animation:'spin 0.8s linear infinite', margin:'0 auto' }}/></div>
+          {loading ? <div style={{ textAlign:'center', padding:60 }}><div style={{ width:36, height:36, border:'3px solid #e5e7eb', borderTop:'3px solid var(--accent)', borderRadius:'50%', animation:'spin 0.8s linear infinite', margin:'0 auto' }}/></div>
           : filtered.length === 0 ? (
             <div style={{ textAlign:'center', padding:60 }}>
               <div style={{ fontSize:48, marginBottom:12 }}>📅</div>
-              <p style={{ color:'var(--text-light)' }}>No appointments found</p>
+              <p style={{ color:'var(--text-mid)' }}>No appointments found</p>
             </div>
           ) : (
             <div style={{ overflowX:'auto' }}>
@@ -60,15 +58,15 @@ const MyAppointments = () => {
                 <tbody>
                   {filtered.map(a => (
                     <tr key={a.id}>
-                      <td style={{ fontWeight:600 }}>Dr. {a.doctorName}</td>
-                      <td style={{ color:'var(--text-light)' }}>{a.specialization}</td>
+                      <td style={{ fontWeight:700, color:'var(--primary)' }}>Dr. {a.doctorName}</td>
+                      <td style={{ color:'var(--text-mid)' }}>{a.specialization}</td>
                       <td>{a.slotDate}</td>
                       <td>{a.startTime}</td>
-                      <td style={{ maxWidth:140, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color:'var(--text-light)' }}>{a.notes || '—'}</td>
+                      <td style={{ maxWidth:140, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color:'var(--text-mid)' }}>{a.notes || '—'}</td>
                       <td><span className={`badge badge-${a.status.toLowerCase()}`}>{a.status}</span></td>
                       <td>
                         {['PENDING','CONFIRMED'].includes(a.status) && (
-                          <button className="btn btn-sm" style={{ background:'#fff5f5', color:'var(--danger)', border:'1px solid #f8d7da' }} onClick={() => handleCancel(a.id)}>Cancel</button>
+                          <button className="btn btn-sm" style={{ background:'#fef2f2', color:'var(--danger)', border:'1px solid #fecaca' }} onClick={() => handleCancel(a.id)}>Cancel</button>
                         )}
                       </td>
                     </tr>

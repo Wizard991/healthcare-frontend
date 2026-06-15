@@ -31,12 +31,12 @@ const WritePrescription = () => {
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth:800, margin:'0 auto', padding:'28px 20px' }}>
+      <div style={{ maxWidth:800, margin:'0 auto', padding:'32px 24px' }}>
         <div style={{ marginBottom:24 }}>
-          <h1 style={{ fontSize:24, fontWeight:800, display:'flex', alignItems:'center', gap:10 }}><FaFileMedical color="var(--primary)"/> Write Prescription</h1>
-          <p style={{ color:'var(--text-light)', marginTop:4 }}>Create a prescription for a confirmed appointment</p>
+          <h1 className="section-title" style={{ fontSize:28, display:'flex', alignItems:'center', gap:10 }}><FaFileMedical color="var(--accent)"/> Write Prescription</h1>
+          <p className="section-sub">Create a prescription for a confirmed appointment</p>
         </div>
-        <div className="card" style={{ padding:32 }}>
+        <div className="card" style={{ padding:34 }}>
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom:18 }}>
               <label>Select Appointment *</label>
@@ -53,7 +53,7 @@ const WritePrescription = () => {
             </div>
             <div style={{ marginBottom:18 }}><label>Instructions</label><textarea rows={3} placeholder="Avoid stress. Light walking 30 mins daily." value={form.instructions} onChange={e => setForm({...form, instructions:e.target.value})} /></div>
             <div style={{ marginBottom:24 }}><label>Additional Notes</label><textarea rows={2} placeholder="Follow up in 2 weeks..." value={form.notes} onChange={e => setForm({...form, notes:e.target.value})} /></div>
-            <button type="submit" className="btn btn-primary btn-lg" disabled={saving} style={{ width:'100%', justifyContent:'center' }}>
+            <button type="submit" className="btn btn-accent btn-lg" disabled={saving} style={{ width:'100%', justifyContent:'center' }}>
               <FaFileMedical/> {saving ? 'Saving...' : 'Create Prescription'}
             </button>
           </form>

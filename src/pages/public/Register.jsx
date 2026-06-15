@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { register as registerApi } from '../../api/authApi'
 import { useAuth } from '../../context/AuthContext'
-import { MdHealthAndSafety } from 'react-icons/md'
-import { FaEnvelope, FaLock, FaUserMd, FaUser } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaUserMd, FaUser, FaPlus } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 
 const Register = () => {
@@ -15,7 +14,7 @@ const Register = () => {
   const ref = useRef(null)
 
   useEffect(() => {
-    gsap.fromTo(ref.current, { opacity:0, x:40 }, { opacity:1, x:0, duration:0.6, ease:'power2.out' })
+    gsap.fromTo(ref.current, { opacity:0, y:20 }, { opacity:1, y:0, duration:0.6, ease:'power2.out' })
   }, [])
 
   const handleSubmit = async e => {
@@ -34,33 +33,24 @@ const Register = () => {
   }
 
   return (
-    <div style={{ minHeight:'100vh', display:'grid', gridTemplateColumns:'1fr 1fr' }}>
-      {/* Left */}
-      <div style={{ background:'linear-gradient(135deg, #f7941d 0%, #e07a0a 100%)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:48 }}>
-        <MdHealthAndSafety size={64} color="white" />
-        <h1 style={{ color:'white', fontSize:32, fontWeight:800, marginTop:20, textAlign:'center' }}>Join HealthCare</h1>
-        <p style={{ color:'rgba(255,255,255,0.85)', fontSize:15, marginTop:12, textAlign:'center', maxWidth:300, lineHeight:1.7 }}>Whether you're a patient or a doctor — we have the right tools for you.</p>
-        <div style={{ marginTop:40, display:'flex', flexDirection:'column', gap:12, width:'100%', maxWidth:280 }}>
-          {['Book appointments instantly','Access health records anytime','Connect with top specialists','Secure & private platform'].map(t => (
-            <div key={t} style={{ display:'flex', alignItems:'center', gap:10, color:'white', fontSize:14 }}>
-              <span style={{ fontSize:18 }}>✓</span> {t}
-            </div>
-          ))}
-        </div>
-      </div>
+    <div style={{ minHeight:'100vh', background:'var(--primary-light)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div ref={ref} style={{ width:'100%', maxWidth:460 }}>
+        <Link to="/" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, marginBottom:32 }}>
+          <div style={{ width:38, height:38, borderRadius:10, background:'var(--accent)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <FaPlus size={16} color="white" />
+          </div>
+          <span style={{ fontSize:20, fontWeight:800, color:'var(--primary)' }}>We<span style={{ color:'var(--accent)' }}>.</span>Care</span>
+        </Link>
 
-      {/* Right */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:48, background:'white' }}>
-        <div ref={ref} style={{ width:'100%', maxWidth:420 }}>
-          <h2 style={{ fontSize:28, fontWeight:800, color:'var(--text-dark)', marginBottom:6 }}>Create your account</h2>
-          <p style={{ color:'var(--text-light)', marginBottom:24 }}>Join thousands of patients and doctors</p>
+        <div className="card" style={{ padding:36 }}>
+          <h2 style={{ fontSize:26, fontWeight:800, color:'var(--primary)', marginBottom:6 }}>Create your account</h2>
+          <p style={{ color:'var(--text-mid)', marginBottom:24 }}>Join thousands of patients and doctors</p>
 
-          {/* Role selector */}
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:24 }}>
             {[['PATIENT', <FaUser/>, 'I am a Patient'],['DOCTOR', <FaUserMd/>, 'I am a Doctor']].map(([r, icon, label]) => (
               <button key={r} type="button" onClick={() => setForm({...form, role:r})} style={{
-                padding:'14px', borderRadius:10, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:8,
-                border: form.role===r ? '2px solid var(--primary)' : '1.5px solid var(--border)',
+                padding:'16px', borderRadius:12, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:8,
+                border: form.role===r ? '2px solid var(--accent)' : '1.5px solid var(--border)',
                 background: form.role===r ? 'var(--primary-light)' : 'white',
                 color: form.role===r ? 'var(--primary)' : 'var(--text-mid)',
                 fontWeight: form.role===r ? 700 : 500, transition:'all 0.2s', fontSize:14
@@ -85,12 +75,12 @@ const Register = () => {
                 <input type="password" placeholder="Create a strong password" style={{ paddingLeft:42 }} value={form.password} onChange={e => setForm({...form, password:e.target.value})} required />
               </div>
             </div>
-            <button type="submit" className="btn btn-orange btn-lg" disabled={loading} style={{ width:'100%', justifyContent:'center' }}>
+            <button type="submit" className="btn btn-accent btn-lg" disabled={loading} style={{ width:'100%', justifyContent:'center' }}>
               {loading ? 'Creating account...' : 'Create Free Account'}
             </button>
           </form>
-          <p style={{ textAlign:'center', marginTop:20, fontSize:14, color:'var(--text-light)' }}>
-            Already have an account? <Link to="/login" style={{ color:'var(--primary)', fontWeight:700 }}>Sign in</Link>
+          <p style={{ textAlign:'center', marginTop:20, fontSize:14, color:'var(--text-mid)' }}>
+            Already have an account? <Link to="/login" style={{ color:'var(--accent)', fontWeight:700 }}>Sign in</Link>
           </p>
         </div>
       </div>

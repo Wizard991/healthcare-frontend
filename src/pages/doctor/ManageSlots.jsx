@@ -38,53 +38,50 @@ const ManageSlots = () => {
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth:1000, margin:'0 auto', padding:'28px 20px' }}>
+      <div style={{ maxWidth:1000, margin:'0 auto', padding:'32px 24px' }}>
         <div style={{ marginBottom:24 }}>
-          <h1 style={{ fontSize:24, fontWeight:800 }}>Manage Availability</h1>
-          <p style={{ color:'var(--text-light)', marginTop:4 }}>Add time slots for patients to book appointments</p>
+          <h1 className="section-title" style={{ fontSize:28 }}>Manage Availability</h1>
+          <p className="section-sub">Add time slots for patients to book appointments</p>
         </div>
 
-        {/* Add slot */}
-        <div className="card" style={{ padding:28, marginBottom:24 }}>
-          <h2 style={{ fontSize:16, fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}><FaPlus size={14} color="var(--primary)"/> Add New Time Slot</h2>
+        <div className="card" style={{ padding:30, marginBottom:24 }}>
+          <h2 style={{ fontSize:16, fontWeight:800, marginBottom:20, display:'flex', alignItems:'center', gap:8, color:'var(--primary)' }}><FaPlus size={14} color="var(--accent)"/> Add New Time Slot</h2>
           <form onSubmit={handleAdd}>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:16, marginBottom:20 }}>
               <div><label>Date</label><input type="date" value={form.slotDate} onChange={e => setForm({...form, slotDate:e.target.value})} min={new Date().toISOString().split('T')[0]} /></div>
               <div><label>Start Time</label><input type="time" value={form.startTime} onChange={e => setForm({...form, startTime:e.target.value})} /></div>
               <div><label>End Time</label><input type="time" value={form.endTime} onChange={e => setForm({...form, endTime:e.target.value})} /></div>
             </div>
-            <button type="submit" className="btn btn-primary" disabled={adding}><FaPlus/> {adding ? 'Adding...' : 'Add Slot'}</button>
+            <button type="submit" className="btn btn-accent" disabled={adding}><FaPlus/> {adding ? 'Adding...' : 'Add Slot'}</button>
           </form>
         </div>
 
-        {/* Available */}
-        <div className="card" style={{ padding:24, marginBottom:20 }}>
-          <h3 style={{ fontWeight:700, fontSize:15, marginBottom:16 }}>Available Slots ({available.length})</h3>
-          {loading ? <p style={{ color:'var(--text-light)' }}>Loading...</p>
-          : available.length === 0 ? <p style={{ color:'var(--text-light)', fontSize:14 }}>No available slots. Add some above.</p>
+        <div className="card" style={{ padding:26, marginBottom:20 }}>
+          <h3 style={{ fontWeight:800, fontSize:15, marginBottom:16, color:'var(--primary)' }}>Available Slots ({available.length})</h3>
+          {loading ? <p style={{ color:'var(--text-mid)' }}>Loading...</p>
+          : available.length === 0 ? <p style={{ color:'var(--text-mid)', fontSize:14 }}>No available slots. Add some above.</p>
           : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))', gap:12 }}>
               {available.map(s => (
-                <div key={s.id} style={{ border:'1.5px solid var(--border)', borderRadius:10, padding:'14px 16px', display:'flex', justifyContent:'space-between', alignItems:'center', background:'white' }}>
+                <div key={s.id} style={{ border:'1.5px solid var(--border)', borderRadius:12, padding:'14px 16px', display:'flex', justifyContent:'space-between', alignItems:'center', background:'white' }}>
                   <div>
-                    <div style={{ fontWeight:700, fontSize:14, display:'flex', alignItems:'center', gap:6 }}><FaCalendarAlt size={12} color="var(--primary)"/> {s.slotDate}</div>
-                    <div style={{ fontSize:12, color:'var(--text-light)', display:'flex', alignItems:'center', gap:5, marginTop:5 }}><FaClock size={10}/> {s.startTime} – {s.endTime}</div>
+                    <div style={{ fontWeight:800, fontSize:14, display:'flex', alignItems:'center', gap:6, color:'var(--primary)' }}><FaCalendarAlt size={12} color="var(--accent)"/> {s.slotDate}</div>
+                    <div style={{ fontSize:12, color:'var(--text-mid)', display:'flex', alignItems:'center', gap:5, marginTop:5 }}><FaClock size={10}/> {s.startTime} – {s.endTime}</div>
                   </div>
-                  <button onClick={() => handleDelete(s.id)} style={{ background:'#fff5f5', border:'1px solid #f8d7da', color:'var(--danger)', padding:'6px 10px', borderRadius:8, cursor:'pointer', fontSize:13 }}><FaTrash size={12}/></button>
+                  <button onClick={() => handleDelete(s.id)} style={{ background:'#fef2f2', border:'1px solid #fecaca', color:'var(--danger)', padding:'7px 11px', borderRadius:8, cursor:'pointer', fontSize:13 }}><FaTrash size={12}/></button>
                 </div>
               ))}
             </div>}
         </div>
 
-        {/* Booked */}
         {booked.length > 0 && (
-          <div className="card" style={{ padding:24 }}>
-            <h3 style={{ fontWeight:700, fontSize:15, marginBottom:16 }}>Booked Slots ({booked.length})</h3>
+          <div className="card" style={{ padding:26 }}>
+            <h3 style={{ fontWeight:800, fontSize:15, marginBottom:16, color:'var(--primary)' }}>Booked Slots ({booked.length})</h3>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))', gap:12 }}>
               {booked.map(s => (
-                <div key={s.id} style={{ border:'1.5px solid #b2dfdb', borderRadius:10, padding:'14px 16px', background:'#e8f3f1' }}>
-                  <div style={{ fontWeight:700, fontSize:14 }}>{s.slotDate}</div>
-                  <div style={{ fontSize:12, color:'var(--text-light)', marginTop:5 }}>{s.startTime} – {s.endTime}</div>
-                  <span style={{ fontSize:11, background:'#d1e7dd', color:'#0a3622', padding:'2px 8px', borderRadius:10, marginTop:8, display:'inline-block', fontWeight:600 }}>BOOKED</span>
+                <div key={s.id} style={{ border:'1.5px solid var(--border)', borderRadius:12, padding:'14px 16px', background:'var(--primary-light)' }}>
+                  <div style={{ fontWeight:800, fontSize:14, color:'var(--primary)' }}>{s.slotDate}</div>
+                  <div style={{ fontSize:12, color:'var(--text-mid)', marginTop:5 }}>{s.startTime} – {s.endTime}</div>
+                  <span style={{ fontSize:11, background:'#d1fae5', color:'#065f46', padding:'3px 10px', borderRadius:10, marginTop:8, display:'inline-block', fontWeight:700 }}>BOOKED</span>
                 </div>
               ))}
             </div>

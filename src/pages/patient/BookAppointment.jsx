@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/layout/Navbar'
 import { getDoctorById, getAvailableSlots } from '../../api/doctorApi'
 import { bookAppointment } from '../../api/appointmentApi'
-import { FaUserMd, FaClock, FaCalendarAlt, FaArrowLeft, FaStar } from 'react-icons/fa'
+import { FaUserMd, FaClock, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 
 const BookAppointment = () => {
@@ -40,56 +40,54 @@ const BookAppointment = () => {
     finally { setBooking(false) }
   }
 
-  if (loading) return <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100vh' }}><div style={{ width:40, height:40, border:'3px solid #e0e0e0', borderTop:'3px solid var(--primary)', borderRadius:'50%', animation:'spin 0.8s linear infinite' }}/></div>
+  if (loading) return <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100vh' }}><div style={{ width:40, height:40, border:'3px solid #e5e7eb', borderTop:'3px solid var(--accent)', borderRadius:'50%', animation:'spin 0.8s linear infinite' }}/></div>
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth:900, margin:'0 auto', padding:'24px 20px' }}>
+      <div style={{ maxWidth:900, margin:'0 auto', padding:'32px 24px' }}>
         <button onClick={() => navigate(-1)} className="btn btn-outline btn-sm" style={{ marginBottom:20 }}>
           <FaArrowLeft/> Back
         </button>
 
-        {/* Doctor card */}
         {doctor && (
-          <div className="card" style={{ padding:28, marginBottom:24, display:'flex', gap:20, alignItems:'flex-start' }}>
-            <div style={{ width:80, height:80, borderRadius:'50%', background:'var(--primary-light)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+          <div className="card" style={{ padding:30, marginBottom:24, display:'flex', gap:22, alignItems:'flex-start', background:'var(--primary-light)', border:'none' }}>
+            <div style={{ width:84, height:84, borderRadius:18, background:'white', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
               <FaUserMd size={34} color="var(--primary)" />
             </div>
             <div style={{ flex:1 }}>
-              <h2 style={{ fontSize:22, fontWeight:800 }}>Dr. {doctor.fullName}</h2>
-              <p style={{ color:'var(--primary)', fontWeight:600, marginTop:4 }}>{doctor.specialization}</p>
+              <h2 style={{ fontSize:24, fontWeight:800, color:'var(--primary)' }}>Dr. {doctor.fullName}</h2>
+              <p style={{ color:'var(--accent)', fontWeight:700, marginTop:4 }}>{doctor.specialization}</p>
               <div style={{ display:'flex', gap:20, marginTop:10, flexWrap:'wrap' }}>
-                <span style={{ fontSize:13, color:'var(--text-light)' }}>🎓 {doctor.experienceYears || 0} yrs experience</span>
-                <span style={{ fontSize:13, color:'var(--text-light)' }}>⭐ {doctor.rating || '4.5'} rating</span>
-                <span style={{ fontSize:15, fontWeight:700, color:'var(--success)' }}>₹{doctor.consultationFee || 0} consultation</span>
+                <span style={{ fontSize:13, color:'var(--text-mid)' }}>🎓 {doctor.experienceYears || 0} yrs experience</span>
+                <span style={{ fontSize:13, color:'var(--text-mid)' }}>⭐ {doctor.rating || '4.5'} rating</span>
+                <span style={{ fontSize:15, fontWeight:800, color:'var(--primary)' }}>₹{doctor.consultationFee || 0} consultation</span>
               </div>
               {doctor.bio && <p style={{ marginTop:10, color:'var(--text-mid)', fontSize:14, lineHeight:1.6 }}>{doctor.bio}</p>}
             </div>
           </div>
         )}
 
-        {/* Slots */}
-        <div className="card" style={{ padding:28, marginBottom:20 }}>
-          <h3 style={{ fontSize:17, fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>
-            <FaCalendarAlt color="var(--primary)"/> Select Appointment Slot
+        <div className="card" style={{ padding:30, marginBottom:20 }}>
+          <h3 style={{ fontSize:18, fontWeight:800, marginBottom:20, display:'flex', alignItems:'center', gap:8, color:'var(--primary)' }}>
+            <FaCalendarAlt color="var(--accent)"/> Select Appointment Slot
           </h3>
           {Object.keys(grouped).length === 0 ? (
-            <div style={{ textAlign:'center', padding:40, color:'var(--text-light)' }}>
+            <div style={{ textAlign:'center', padding:40, color:'var(--text-mid)' }}>
               <div style={{ fontSize:40, marginBottom:12 }}>📅</div>
               No available slots. Please check back later.
             </div>
           ) : (
             Object.entries(grouped).map(([date, dateSlots]) => (
               <div key={date} style={{ marginBottom:20 }}>
-                <div style={{ fontSize:14, fontWeight:700, color:'var(--text-dark)', marginBottom:10, padding:'6px 12px', background:'var(--bg)', borderRadius:8, display:'inline-block' }}>
+                <div style={{ fontSize:14, fontWeight:800, color:'var(--primary)', marginBottom:10, padding:'7px 14px', background:'var(--bg-soft)', borderRadius:8, display:'inline-block' }}>
                   📅 {new Date(date).toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' })}
                 </div>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:10 }}>
                   {dateSlots.map(s => (
                     <div key={s.id} onClick={() => setSelectedSlot(s.id)} style={{
-                      padding:'10px 18px', borderRadius:8, cursor:'pointer', fontSize:13, fontWeight:600,
-                      border: selectedSlot===s.id ? '2px solid var(--primary)' : '1.5px solid var(--border)',
+                      padding:'11px 18px', borderRadius:10, cursor:'pointer', fontSize:13, fontWeight:700,
+                      border: selectedSlot===s.id ? '2px solid var(--accent)' : '1.5px solid var(--border)',
                       background: selectedSlot===s.id ? 'var(--primary-light)' : 'white',
                       color: selectedSlot===s.id ? 'var(--primary)' : 'var(--text-dark)',
                       transition:'all 0.2s', display:'flex', alignItems:'center', gap:6
@@ -103,18 +101,17 @@ const BookAppointment = () => {
           )}
         </div>
 
-        {/* Notes + confirm */}
-        <div className="card" style={{ padding:28 }}>
+        <div className="card" style={{ padding:30 }}>
           <div style={{ marginBottom:16 }}>
             <label>Reason for visit / Symptoms <span style={{ color:'var(--text-light)', fontWeight:400 }}>(optional)</span></label>
             <textarea rows={3} placeholder="Describe your symptoms or reason for the appointment..." value={notes} onChange={e => setNotes(e.target.value)} />
           </div>
           {selectedSlot && (
-            <div style={{ background:'var(--primary-light)', border:'1.5px solid #b2dfdb', borderRadius:10, padding:'14px 18px', marginBottom:16, fontSize:14, color:'var(--primary)', fontWeight:600 }}>
+            <div style={{ background:'var(--primary-light)', borderRadius:10, padding:'14px 18px', marginBottom:16, fontSize:14, color:'var(--primary)', fontWeight:700 }}>
               ✓ Slot selected — {doctor && `Dr. ${doctor.fullName}`} — Fee: ₹{doctor?.consultationFee || 0}
             </div>
           )}
-          <button className="btn btn-primary btn-lg" onClick={handleBook} disabled={booking || !selectedSlot} style={{ width:'100%', justifyContent:'center' }}>
+          <button className="btn btn-accent btn-lg" onClick={handleBook} disabled={booking || !selectedSlot} style={{ width:'100%', justifyContent:'center' }}>
             {booking ? 'Booking...' : 'Confirm Appointment'}
           </button>
         </div>
